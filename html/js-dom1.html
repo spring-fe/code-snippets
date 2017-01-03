@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>version 1</title>
+	<style>
+		body{
+			background-color: white;
+			font-size: 24px;
+		}
+		#user-list{
+			line-height: 1.5em;
+		}
+		#user-list > li:hover{
+			background-color: rgba(0,0,0,0.3);
+		}
+	</style>
+</head>
+<body>
+	<ul id="user-list">
+		<li>张三</li>
+		<li>李四</li>
+		<li>王五</li>
+		<li>赵六</li>
+	</ul>
+	<script>
+		var list = document.querySelector("#user-list");
+		var items = document.querySelectorAll('#user-list > li');
+
+		list.addEventListener('click',function(e){
+			if(e.target.tagName === 'LI'){
+				var item = e.target;
+
+				items.forEach(function(item){
+					item.style.background = 'inherit';
+					item.style.color = 'inherit';
+				});
+
+				item.style.background = 'black';
+				item.style.color = 'white';
+			}
+		})
+	</script>
+</body>
+</html>

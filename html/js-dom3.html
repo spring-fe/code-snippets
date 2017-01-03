@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>version 3</title>
+	<style>
+		body{
+			background-color: white;
+			font-size: 24px;
+		}
+		#user-list{
+			line-height: 1.5em;
+		}
+		#user-list > li:hover{
+			background-color: rgba(0,0,0,0.3);
+		}
+		#user-list input{
+			display: none;
+		}
+		#user-list label{
+			display: block;
+		}
+		#user-list input:checked + label{
+			background-color: black;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<ul id="user-list">
+		<li><input name="item" type="radio"><label>张三</label></li>
+		<li><input name="item" type="radio"><label>李四</label></li>
+		<li><input name="item" type="radio"><label>王五</label></li>
+		<li><input name="item" type="radio"><label>赵六</label></li>
+	</ul>
+	<script>
+		var list = document.querySelector("#user-list");
+
+		list.addEventListener('click',function(e){
+			if(e.target.tagName === 'LABEL' || e.target.tagName === 'LI'){
+				var input;
+				if(e.target.tagName === 'LABEL'){
+					input = e.target.previousSibling;
+				}else{
+					input = e.target.lastChild;
+				}
+				input.checked = true;
+			}
+		})
+	</script>
+</body>
+</html>
