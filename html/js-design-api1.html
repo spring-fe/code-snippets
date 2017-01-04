@@ -14,31 +14,51 @@
 			border-radius: 25px;
 		}
 		.wait > li:nth-child(2){
-			background-color: yellow;
+			background-color: #d3d31b;
 		}
 		.wait > li:not(:nth-child(2)){
-			background-color: gray;
+			background-color: #bbb8b8;
 		}
 		.stop > li:nth-child(1){
-			background-color: red;
+			background-color: #ff6e6e;
 		}
 		.stop > li:not(:nth-child(1)){
-			background-color: gray;
+			background-color: #bbb8b8;
 		}
 		.pass > li:nth-child(3){
-			background-color: green;
+			background-color: #4be54b;
 		}
 		.pass > li:not(:nth-child(3)){
-			background-color: gray;
+			background-color: #bbb8b8;
 		}
 
 	</style>
 </head>
 <body>
-	<ul class="wait">
+	<ul id="traffic">
 		<li></li>
 		<li></li>
 		<li></li>
 	</ul>
+	<script>
+		/**
+		*如果需求增大到5盏、10盏灯？
+		*过程耦合+Callback Hell... 差评！
+		*/
+		document.addEventListener("DOMContentLoaded",exec);
+		function exec(){
+			var traffic = document.getElementById('traffic');
+			(function reset(){
+				traffic.className = 'wait';
+				setTimeout(function(){
+					traffic.className = 'stop';
+					setTimeout(function(){
+						traffic.className = 'pass';
+						setTimeout(reset, 2000)
+					},2000)
+				})
+			})();
+		}
+	</script>
 </body>
 </html>
