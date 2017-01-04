@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>版本1</title>
+	<style>
+		li{
+			list-style: none;
+			margin-bottom: 10px;
+			width: 50px;
+			height: 50px;
+			-moz-border-radius: 25px;
+			-webkit-border-radius: 25px;
+			border-radius: 25px;
+		}
+		.wait > li:nth-child(2){
+			background-color: yellow;
+		}
+		.wait > li:not(:nth-child(2)){
+			background-color: gray;
+		}
+		.stop > li:nth-child(1){
+			background-color: red;
+		}
+		.stop > li:not(:nth-child(1)){
+			background-color: gray;
+		}
+		.pass > li:nth-child(3){
+			background-color: green;
+		}
+		.pass > li:not(:nth-child(3)){
+			background-color: gray;
+		}
+
+	</style>
+</head>
+<body>
+	<ul class="wait">
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</body>
+</html>
