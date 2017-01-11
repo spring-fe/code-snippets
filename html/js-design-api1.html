@@ -4,41 +4,33 @@
 	<meta charset="UTF-8">
 	<title>版本1</title>
 	<style>
-		li{
-			list-style: none;
-			margin-bottom: 10px;
+		#traffic > li{
+			display: block;
+		}
+		#traffic span{
+			display: inline-block;
 			width: 50px;
 			height: 50px;
-			-moz-border-radius: 25px;
-			-webkit-border-radius: 25px;
-			border-radius: 25px;
+			background-color: gray;
+			margin: 5px;
+			border-radius: 50%;
 		}
-		.wait > li:nth-child(2){
-			background-color: #d3d31b;
+		#traffic.stop li:nth-child(1) span{
+			background-color: #a00;
 		}
-		.wait > li:not(:nth-child(2)){
-			background-color: #bbb8b8;
+		#traffic.wait li:nth-child(2) span{
+			background-color: #aa0;
 		}
-		.stop > li:nth-child(1){
-			background-color: #ff6e6e;
+		#traffic.pass li:nth-child(3) span{
+			background-color: #0a0;
 		}
-		.stop > li:not(:nth-child(1)){
-			background-color: #bbb8b8;
-		}
-		.pass > li:nth-child(3){
-			background-color: #4be54b;
-		}
-		.pass > li:not(:nth-child(3)){
-			background-color: #bbb8b8;
-		}
-
 	</style>
 </head>
 <body>
-	<ul id="traffic">
-		<li></li>
-		<li></li>
-		<li></li>
+	<ul id="traffic" class="wait">
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
 	</ul>
 	<script>
 		/**
