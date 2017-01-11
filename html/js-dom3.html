@@ -33,20 +33,5 @@
 		<li><input name="item" type="radio"><label>王五</label></li>
 		<li><input name="item" type="radio"><label>赵六</label></li>
 	</ul>
-	<script>
-		var list = document.querySelector("#user-list");
-
-		list.addEventListener('click',function(e){
-			if(e.target.tagName === 'LABEL' || e.target.tagName === 'LI'){
-				var input;
-				if(e.target.tagName === 'LABEL'){
-					input = e.target.previousSibling;
-				}else{
-					input = e.target.lastChild;
-				}
-				input.checked = true;
-			}
-		})
-	</script>
 </body>
 </html>
