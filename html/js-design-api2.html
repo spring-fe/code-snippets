@@ -46,7 +46,7 @@
 			setInterval(function(){
 				var state = stateList[currentStateIndex];
 				traffic.className = state;
-				currentStateIndex = (currentStateIndex + 1) % stateList;
+				currentStateIndex = (currentStateIndex + 1) % stateList.length;
 			}, 2000)
 		}
 	</script>
