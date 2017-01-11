@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>版本4</title>
+	<style>
+		#traffic > li{
+			display: block;
+		}
+		#traffic span{
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			background-color: gray;
+			margin: 5px;
+			border-radius: 50%;
+		}
+		#traffic.stop li:nth-child(1) span{
+			background-color: #a00;
+		}
+		#traffic.wait li:nth-child(2) span{
+			background-color: #aa0;
+		}
+		#traffic.pass li:nth-child(3) span{
+			background-color: #0a0;
+		}
+
+	</style>
+</head>
+<body>
+	<ul id="traffic" class="wait">
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+	</ul>
+	<script>
+		/**
+		*优点：面向对象、函数式、Promise、灵活可扩展
+		*缺点：复杂度、实现难度，是否过度设计了？
+		*设计是双刃剑，写代码简单，程序设计不易，且行且惜...
+		*
+		*/
+		const trafficEl = document.getElementById('traffic');
+
+		function TrafficProtocol(el, reset){
+		  this.subject = el;
+		  this.autoReset = reset;
+		  this.stateList = [];
+		}
+
+		TrafficProtocol.prototype.putState = function(fn){
+		  this.stateList.push(fn);
+		}
+		TrafficProtocol.prototype.reset = function(){
+		  let subject = this.subject;
+		  
+		  this.statePromise = Promise.resolve();
+		  this.stateList.forEach((stateFn) => {
+		    this.statePromise = this.statePromise.then(()=>{
+		      return new Promise(resolve => {
+		        stateFn(subject, resolve);
+		      });
+		    });
+		  });
+		  if(this.autoReset){
+		    this.statePromise.then(this.reset.bind(this));
+		  }
+		}
+
+		TrafficProtocol.prototype.start = function(){
+		  this.reset();
+		}
+
+		var traffic = new TrafficProtocol(trafficEl, true);
+
+		traffic.putState(function(subject, next){
+		  subject.className = 'wait';
+		  setTimeout(next, 1000);
+		});
+
+		traffic.putState(function(subject, next){
+		  subject.className = 'stop';
+		  setTimeout(next, 2000);
+		});
+
+		traffic.putState(function(subject, next){
+		  subject.className = 'pass';
+		  setTimeout(next, 3000);
+		});
+
+		traffic.start();
+
+
+	</script>
+</body>
+</html>
