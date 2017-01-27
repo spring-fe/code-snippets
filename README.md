@@ -29,3 +29,24 @@ body{
 	background-color: rgba(0,0,0,0.3);
 }
 ```
+```js
+let list = document.querySelector('#user-list');
+let items = document.querySelectorAll('#user-list > li');
+
+list.addEventListener('click', function(e){
+	if(e.target.tagName === 'LI'){
+		let item = e.target;
+		
+		items.forEach(function(item){
+			item.style.background = 'inherit';
+			item.style.color = 'inherit';
+		});
+		
+		item.style.background = 'black';
+		item.style.color = 'white';
+		
+		console.log(item.innerHTML);
+	}
+});
+
+```
