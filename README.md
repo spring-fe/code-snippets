@@ -297,4 +297,123 @@ reset();
 ```
 版本 5 用 Promise 解决问题， 抽象出 wait 方法，还不错
 ##### 版本6
+```js
+const trafficEl = document.getElementById('traffic');
+
+function TrafficProtocol(el, reset){
+  this.subject = el;
+  this.autoReset = reset;
+  this.stateList = [];
+}
+
+TrafficProtocol.prototype.putState = function(fn){
+  this.stateList.push(fn);
+}
+
+TrafficProtocol.prototype.reset = function(){
+  let subject = this.subject;
+  
+  this.statePromise = Promise.resolve();
+  this.stateList.forEach((stateFn) => {
+    this.statePromise = this.statePromise.then(()=>{
+      return new Promise(resolve => {
+        stateFn(subject, resolve);
+      });
+    });
+  });
+  if(this.autoReset){
+    this.statePromise.then(this.reset.bind(this));
+  }
+}
+
+TrafficProtocol.prototype.start = function(){
+  this.reset();
+}
+
+var traffic = new TrafficProtocol(trafficEl, true);
+
+traffic.putState(function(subject, next){
+  subject.className = 'wait';
+  setTimeout(next, 1000);
+});
+
+traffic.putState(function(subject, next){
+  subject.className = 'stop';
+  setTimeout(next, 2000);
+});
+
+traffic.putState(function(subject, next){
+  subject.className = 'pass';
+  setTimeout(next, 3000);
+});
+
+traffic.start();
+```
+优点：面向对象、函数式、Promise、灵活可扩展
+
+缺点：复杂度、实现难度，是否过度设计了？
+
+设计是双刃剑
+
+写代码简单
+
+程序设计不易
+
+且行且珍惜……
+#### Javascript的效率
+给定一个很大的数组，数组里面有许多整数，用 JavaScript 实现一个函数，要求：
+
+将数组中之和为 10 的每一对数配对并找出，返回这些数配对后的数组。
+
+例如：[11, 3, 8, 9, 7, -1, 1, 2, 4...]
+
+得到：[[11,-1],[3,7],[8,2],[9,1]...]
+
+##### 版本1
+```js
+let list = [11, 4, 9, 3, -1, -3, 6, 7, 9, 13, 8];
+
+function map(list){
+	let ret = [], len = list.length;
+	
+	for(let i = 0; i < len; i++){
+		for(let j = i+1; j < len; j++){
+			if(list[i] + list[j] === 10){
+				ret.push([list[i], list[j]]);
+			}
+		}
+	}
+	return ret;
+}
+
+console.log(JSON.stringify(map(list)));
+```
+##### 版本2
+```js
+let list = [11, 4, 9, 3, -1, -3, 6, 7, 9, 13, 8];
+
+function map(list){
+	let ret = [];
+	list = list.sort((a,b)=>a-b);
+	
+	for(let i = 0, j = list.length - 1; i < j;){
+		let a = list[i], b = list[j];
+		if(a + b === 10){
+			ret.push([a,b]);
+			i++;
+			j--;
+		}else if(a + b < 10){
+			i++;
+		}else{
+			j--;
+		}
+	}
+	return ret;
+}
+
+console.log(JSON.stringify(map(list)));
+```
+为什么版本2比版本1快很多？
+
+还有没有别的解法？
 
