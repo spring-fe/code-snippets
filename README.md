@@ -182,7 +182,6 @@ const traffic = document.getElementById('traffic');
 })();
 ```
 问题：
-
 如果需求增加到 5 盏、10 盏灯？
 
 ```js
