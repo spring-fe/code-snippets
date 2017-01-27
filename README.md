@@ -221,3 +221,22 @@ setInterval(function(){
 依赖于外部变量 stateList、currentStateIndex
 封装性不好……差评！！
 ##### 版本3
+```js
+const traffic = document.getElementById('traffic');
+
+function start(traffic, stateList){
+  var currentStateIndex = 0;
+
+  setInterval(function(){
+    var state = stateList[currentStateIndex];
+    traffic.className = state;
+    currentStateIndex = (currentStateIndex + 1) % stateList.length;
+  }, 2000);
+}
+
+start(traffic, ['wait', 'stop', 'pass']);
+```
+问题：
+版本 3 虽然中规中矩……
+但其实可复用性差！
+##### 版本4
