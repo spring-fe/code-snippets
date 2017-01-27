@@ -9,6 +9,7 @@ from 月影
 
 ### 如何写好JavaScript
 #### 操作DOM
+##### 版本1
 ```html
 <ul id="user-list">
 	<li>张三</li>
