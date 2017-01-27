@@ -204,3 +204,20 @@ const traffic = document.getElementById('traffic');
 ```
 过程耦合 + Callback Hell…… 差评！！！
 ##### 版本2
+```js
+const traffic = document.getElementById('traffic');
+
+var stateList = ['wait', 'stop', 'pass'];
+
+var currentStateIndex = 0;
+
+setInterval(function(){
+  var state = stateList[currentStateIndex];
+  traffic.className = state;
+  currentStateIndex = (currentStateIndex + 1) % stateList.length;
+}, 2000);
+```
+问题：
+依赖于外部变量 stateList、currentStateIndex
+封装性不好……差评！！
+##### 版本3
