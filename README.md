@@ -9,6 +9,7 @@ from 月影
 
 ### 如何写好JavaScript
 #### 操作DOM
+张三，李四，王五，赵六列表，点击其中一个列表，背景颜色变为黑色，其他列表项为默认颜色。
 ##### 版本1
 ```html
 <ul id="user-list">
@@ -92,7 +93,7 @@ list.addEventListener('click', function(e){
 	}
 });
 ```
-相对于版本1，版本2使javascript与HTML、CSS的职责分离
+相对于版本1，版本2使javascript与HTML、CSS的职责分离。
 ##### 版本3
 ```html
 <ul id="user-list">
