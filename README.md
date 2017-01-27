@@ -9,7 +9,7 @@ from 月影
 
 ### 如何写好JavaScript
 #### 操作DOM
-张三，李四，王五，赵六列表，点击其中一个列表，背景颜色变为黑色，其他列表项为默认颜色。
+张三，李四，王五，赵六列表，点击其中一个列表项，背景颜色变为黑色，其他列表项为默认颜色。
 ##### 版本1
 ```html
 <ul id="user-list">
@@ -131,3 +131,76 @@ body{
 }
 ```
 #### API的设计
+红绿灯，三个状态用红(stop)、绿(pass)、黄(wait)表示，要求用JavaScript让三个状态轮流切换，每个状态的停留时间是2秒。
+##### 版本1
+```html
+<ul id="traffic" class="wait">
+  <li><span></span></li>
+  <li><span></span></li>
+  <li><span></span></li>
+</ul>
+```
+```css
+#traffic > li{
+  display: block;
+}
+
+#traffic span{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: gray;
+  margin: 5px;
+  border-radius: 50%;
+}
+
+#traffic.stop li:nth-child(1) span{
+  background-color: #a00;
+}
+
+#traffic.wait li:nth-child(2) span{
+  background-color: #aa0;
+}
+
+#traffic.pass li:nth-child(3) span{
+  background-color: #0a0;
+}
+```
+```js
+const traffic = document.getElementById('traffic');
+
+(function reset(){
+  traffic.className = 'wait';
+  
+  setTimeout(function(){
+      traffic.className = 'stop';
+      setTimeout(function(){
+        traffic.className = 'pass';
+        setTimeout(reset, 2000)
+      }, 2000)
+  }, 2000);
+})();
+```
+问题：
+
+如果需求增加到 5 盏、10 盏灯？
+
+```js
+const traffic = document.getElementById('traffic');
+
+(function reset(){
+  traffic.className = 'wait';
+  
+  setTimeout(function(){
+      traffic.className = 'stop';
+      setTimeout(function(){
+        traffic.className = 'pass';
+        setTimeout(function(){
+          ...
+            ...
+              ...
+                ...
+                  setTimeout(reset, 2000)
+```
+过程耦合 + Callback Hell…… 差评！！！
+##### 版本2
