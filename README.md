@@ -239,3 +239,34 @@ start(traffic, ['wait', 'stop', 'pass']);
 版本 3 虽然中规中矩……
 但其实可复用性差！
 ##### 版本4
+```js
+const traffic = document.getElementById('traffic');
+
+function poll(...fnList){
+  let stateIndex = 0;
+  
+  return function(...args){
+    let fn = fnList[stateIndex++ % fnList.length];
+    return fn.apply(this, args);
+  }
+}
+
+function setState(state){
+  traffic.className = state;
+}
+
+let trafficStatePoll = poll(setState.bind(null, 'wait'),
+                            setState.bind(null, 'stop'),
+                            setState.bind(null, 'pass'));
+
+setInterval(trafficStatePoll, 2000);
+```
+版本 4 函数式编程，抽象出 poll 方法，有点意思
+
+然而需求来了……
+
+PM 做了需求变更如下：
+
+wait、stop、pass 状态的时长不相等，分别改成 1秒、2秒、3秒
+
+那么是否要回归到版本 1 呢？
