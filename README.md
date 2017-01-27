@@ -270,3 +270,31 @@ PM 做了需求变更如下：
 wait、stop、pass 状态的时长不相等，分别改成 1秒、2秒、3秒
 
 那么是否要回归到版本 1 呢？
+##### 版本5
+```js
+const traffic = document.getElementById('traffic');
+
+function wait(time){
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function setState(state){
+  traffic.className = state;
+}
+
+function reset(){
+  Promise.resolve()
+    .then(setState.bind(null, 'wait'))
+    .then(wait.bind(null, 1000))
+    .then(setState.bind(null, 'stop'))
+    .then(wait.bind(null, 2000))
+    .then(setState.bind(null, 'pass'))
+    .then(wait.bind(null, 3000))
+    .then(reset);
+}
+
+reset();
+```
+版本 5 用 Promise 解决问题， 抽象出 wait 方法，还不错
+##### 版本6
+
