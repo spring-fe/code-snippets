@@ -421,8 +421,6 @@ console.log(JSON.stringify(map(list)));
 
 修改函数
 
-颠倒函数API参数顺序
-
 ```js
 function setColor(color, el){
   el.style.color = color;
@@ -434,11 +432,36 @@ setColor('red', content);
 function setColor2(el, color){
   el.style.color = color;
 }
+setColor2(content, 'red');
 ```
 ```js
 function setColor2(el, color){
   setColor(color, el);
 }
+setColor2(content, 'red');
+```
+```js
+function reverseArgs(fn){
+  return function(...args){
+    args = args.reverse();
+    return fn.apply(this,args);
+  }
+}
+setColor = reverseArgs(setColor);
+setColor(content, 'blue');
+```
+```js
+function delay(fn, time){
+  return function(...args){
+    setTimeout(fn.bind(this, ...args), time);
+  }
+}
+setColor = delay(reverseArgs(setColor), 100);
+setColor(content, 'blue');
+```
+```js
+var wait500 = reverseArgs(setTimeout).bind(null, 500);
+wait500(()=>console.log('message'));
 ```
 
 
