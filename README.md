@@ -419,5 +419,27 @@ console.log(JSON.stringify(map(list)));
 #### 高阶函数－过程抽象
 数据抽象是把数据抽象出来由函数处理，高阶函数是函数处理函数。
 
+修改函数
+
+颠倒函数API参数顺序
+
+```js
+function setColor(color, el){
+  el.style.color = color;
+}
+
+setColor('red', content);
+```
+```js
+function setColor2(el, color){
+  el.style.color = color;
+}
+```
+```js
+function setColor2(el, color){
+  setColor(color, el);
+}
+```
+
 
 
